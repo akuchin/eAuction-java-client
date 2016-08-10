@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/akuchin/eAuction-java-client.svg?branch=master)](https://travis-ci.org/akuchin/eAuction-java-client)
+[![Build Status](https://travis-ci.org/akuchin/openprocurement-java-client.svg?branch=master)](https://travis-ci.org/akuchin/openprocurement-java-client)
 
-# eAuction-java-client
-Java client for aAuction (ProZorro)
+# openprocurement-java-client
+Java client for openprocurement (ProZorro)
 

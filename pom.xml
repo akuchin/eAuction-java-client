@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.torgua</groupId>
-  <artifactId>eAuction-java-client</artifactId>
+  <artifactId>openprocurement-java-client</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>eAuction-java-client</name>
+  <name>openprocurement-java-client</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -56,14 +56,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <distributionManagement>
-    <repository>
-      <id>bintray-aakuchin-maven</id>
-      <name>aakuchin-maven</name>
-      <url>https://api.bintray.com/maven/aakuchin/maven/eAuction-java-client/;publish=1</url>
-    </repository>
-  </distributionManagement>
 
 
 </project>
