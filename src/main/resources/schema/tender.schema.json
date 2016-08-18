@@ -1,8 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "javaType": "org.openprocurement.api.model.Tender",
   "type": "object",
   "properties": {
-    "tender": {
+    "data": {
+      "javaType": "org.openprocurement.api.model.TenderData",
       "type": "object",
       "properties": {
         "procurementMethod": {

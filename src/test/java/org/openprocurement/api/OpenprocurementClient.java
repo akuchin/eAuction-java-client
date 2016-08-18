@@ -1,5 +1,7 @@
 package org.openprocurement.api;
 
+import com.fasterxml.jackson.datatype.joda.JodaMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -16,6 +18,12 @@ public class OpenprocurementClient {
     public static OpenprocurementService newProxyClient(URI rootUri) {
         final Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
         final WebTarget rootTarget = client.target(rootUri);
+
+        // joda support
+        final JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
+        provider.setMapper(new JodaMapper());
+        rootTarget.register(provider);
+
         return WebResourceFactory.newResource(OpenprocurementService.class, rootTarget);
     }
 
