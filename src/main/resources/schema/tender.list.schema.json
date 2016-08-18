@@ -13,7 +13,28 @@
           "type": "string"
         },
         "offset": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "path",
+        "uri",
+        "offset"
+      ]
+    },
+    "prev_page": {
+      "type": "object",
+      "properties": {
+        "path": {
           "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "string",
+          "format": "date-time"
         }
       },
       "required": [
