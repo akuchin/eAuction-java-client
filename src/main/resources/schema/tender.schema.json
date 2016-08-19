@@ -19,6 +19,23 @@
         "auctionID": {
           "type": "string"
         },
+        "awardPeriod": {
+          "type": "object",
+          "properties": {
+            "startDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "startDate",
+            "endDate"
+          ]
+        },
         "numberOfBids": {
           "type": "integer"
         },
@@ -27,6 +44,124 @@
         },
         "title": {
           "type": "string"
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "documentOf": {
+                "type": "string"
+              },
+              "datePublished": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "dateModified": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "format",
+              "url",
+              "title",
+              "documentOf",
+              "datePublished",
+              "dateModified",
+              "id"
+            ]
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "documents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "documentOf": {
+                      "type": "string"
+                    },
+                    "datePublished": {
+                      "type": "string"
+                    },
+                    "dateModified": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "format",
+                    "url",
+                    "title",
+                    "documentOf",
+                    "datePublished",
+                    "dateModified",
+                    "id"
+                  ]
+                }
+              },
+              "awardID": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "documents",
+              "awardID",
+              "id"
+            ]
+          }
+        },
+        "auctionPeriod": {
+          "type": "object",
+          "properties": {
+            "startDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "startDate",
+            "endDate"
+          ]
         },
         "submissionMethodDetails": {
           "type": "string"
@@ -316,6 +451,324 @@
             "startDate",
             "endDate"
           ]
+        },
+        "awards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "documents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "documentOf": {
+                      "type": "string"
+                    },
+                    "datePublished": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "dateModified": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "format",
+                    "url",
+                    "title",
+                    "documentOf",
+                    "datePublished",
+                    "dateModified",
+                    "id"
+                  ]
+                }
+              },
+              "complaintPeriod": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "startDate",
+                  "endDate"
+                ]
+              },
+              "suppliers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "contactPoint": {
+                      "type": "object",
+                      "properties": {
+                        "telephone": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "telephone",
+                        "name",
+                        "email"
+                      ]
+                    },
+                    "identifier": {
+                      "type": "object",
+                      "properties": {
+                        "scheme": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "legalName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "scheme",
+                        "id",
+                        "legalName"
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "object",
+                      "properties": {
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "countryName": {
+                          "type": "string"
+                        },
+                        "streetAddress": {
+                          "type": "string"
+                        },
+                        "region": {
+                          "type": "string"
+                        },
+                        "locality": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "postalCode",
+                        "countryName",
+                        "streetAddress",
+                        "region",
+                        "locality"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "contactPoint",
+                    "identifier",
+                    "name",
+                    "address"
+                  ]
+                }
+              },
+              "bid_id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "valueAddedTaxIncluded": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "currency",
+                  "amount",
+                  "valueAddedTaxIncluded"
+                ]
+              },
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "documents",
+              "complaintPeriod",
+              "suppliers",
+              "bid_id",
+              "value",
+              "date",
+              "id"
+            ]
+          }
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "participationUrl": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "valueAddedTaxIncluded": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "currency",
+                  "amount",
+                  "valueAddedTaxIncluded"
+                ]
+              },
+              "tenderers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "contactPoint": {
+                      "type": "object",
+                      "properties": {
+                        "telephone": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "telephone",
+                        "name",
+                        "email"
+                      ]
+                    },
+                    "identifier": {
+                      "type": "object",
+                      "properties": {
+                        "scheme": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "legalName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "scheme",
+                        "id",
+                        "legalName"
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "object",
+                      "properties": {
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "countryName": {
+                          "type": "string"
+                        },
+                        "streetAddress": {
+                          "type": "string"
+                        },
+                        "region": {
+                          "type": "string"
+                        },
+                        "locality": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "postalCode",
+                        "countryName",
+                        "streetAddress",
+                        "region",
+                        "locality"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "contactPoint",
+                    "identifier",
+                    "name",
+                    "address"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "date",
+              "participationUrl",
+              "id",
+              "value",
+              "tenderers"
+            ]
+          }
+        },
+        "auctionUrl": {
+          "type": "string"
         },
         "id": {
           "type": "string"
