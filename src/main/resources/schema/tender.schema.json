@@ -1,6 +1,40 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "javaType": "org.openprocurement.api.model.Tender",
+
+  "definitions": {
+    "identifier": {
+      "type": "object",
+      "properties": {
+        "scheme": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "legalName": {
+          "type": "string"
+        },
+        "legalName_ru": {
+          "type": "string"
+        },
+        "legalName_en": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "scheme",
+        "id"
+      ]
+    }
+  },
+
   "type": "object",
   "properties": {
     "data": {
@@ -229,6 +263,18 @@
                   ]
                 }
               },
+              "deliveryDate": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "string",
+                    "format" : "date-time"
+                  }
+                },
+                "required": [
+                  "startDate"
+                ]
+              },
               "id": {
                 "type": "string"
               },
@@ -321,35 +367,16 @@
                 },
                 "email": {
                   "type": "string"
+                },
+                "url": {
+                  "type": "string"
                 }
               },
               "required": [
                 "name"
               ]
             },
-            "identifier": {
-              "type": "object",
-              "properties": {
-                "scheme": {
-                  "type": "string"
-                },
-                "id": {
-                  "type": "string"
-                },
-                "legalName": {
-                  "type": "string"
-                },
-                "legalName_ru": {
-                  "type": "string"
-                },
-                "legalName_en": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "scheme", "id"
-              ]
-            },
+            "identifier": {"$ref": "#/definitions/identifier"},
             "name": {
               "type": "string"
             },
@@ -452,6 +479,51 @@
             "endDate"
           ]
         },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "featureOf": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "enum": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "title"
+                  ]
+                }
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "featureOf",
+              "description",
+              "enum",
+              "title"
+            ]
+          }
+        },
         "awards": {
           "type": "array",
           "items": {
@@ -531,7 +603,16 @@
                         "name": {
                           "type": "string"
                         },
+                        "name_ru": {
+                          "type": "string"
+                        },
+                        "name_ein": {
+                          "type": "string"
+                        },
                         "email": {
+                          "type": "string"
+                        },
+                        "url": {
                           "type": "string"
                         }
                       },
@@ -541,25 +622,7 @@
                         "email"
                       ]
                     },
-                    "identifier": {
-                      "type": "object",
-                      "properties": {
-                        "scheme": {
-                          "type": "string"
-                        },
-                        "id": {
-                          "type": "string"
-                        },
-                        "legalName": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "scheme",
-                        "id",
-                        "legalName"
-                      ]
-                    },
+                    "identifier": {"$ref": "#/definitions/identifier"},
                     "name": {
                       "type": "string"
                     },
@@ -689,7 +752,16 @@
                         "name": {
                           "type": "string"
                         },
+                        "name_ru": {
+                          "type": "string"
+                        },
+                        "name_en": {
+                          "type": "string"
+                        },
                         "email": {
+                          "type": "string"
+                        },
+                        "url": {
                           "type": "string"
                         }
                       },
@@ -699,25 +771,7 @@
                         "email"
                       ]
                     },
-                    "identifier": {
-                      "type": "object",
-                      "properties": {
-                        "scheme": {
-                          "type": "string"
-                        },
-                        "id": {
-                          "type": "string"
-                        },
-                        "legalName": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "scheme",
-                        "id",
-                        "legalName"
-                      ]
-                    },
+                    "identifier": {"$ref": "#/definitions/identifier"},
                     "name": {
                       "type": "string"
                     },
