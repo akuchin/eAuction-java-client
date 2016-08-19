@@ -15,7 +15,7 @@ public class OpenprocurementClient {
 
     public static final URI SANDBOX_LATEST_URL = URI.create("https://api-sandbox.ea.openprocurement.org/api/0");
 
-    public static OpenprocurementService newProxyClient(URI rootUri) {
+    public static OpenprocurementApi newApiClient(URI rootUri) {
         final Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
         final WebTarget rootTarget = client.target(rootUri);
 
@@ -24,7 +24,7 @@ public class OpenprocurementClient {
         provider.setMapper(new JodaMapper());
         rootTarget.register(provider);
 
-        return WebResourceFactory.newResource(OpenprocurementService.class, rootTarget);
+        return WebResourceFactory.newResource(OpenprocurementApi.class, rootTarget);
     }
 
 }

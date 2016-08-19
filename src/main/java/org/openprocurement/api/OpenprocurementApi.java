@@ -7,7 +7,7 @@ import org.openprocurement.api.model.TenderList;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-public interface OpenprocurementService {
+public interface OpenprocurementApi {
 
     @GET
     @Path("/auctions/{id}")
@@ -17,10 +17,10 @@ public interface OpenprocurementService {
     @GET
     @Path("/auctions")
     @Produces(MediaType.APPLICATION_JSON)
-    TenderList getTenders();
+    TenderList getTendersPage();
 
     @GET
     @Path("/auctions")
     @Produces(MediaType.APPLICATION_JSON)
-    TenderList getTenders(@QueryParam("offset") DateTime offset);
+    TenderList getTendersPage(@QueryParam("offset") DateTime offset);
 }

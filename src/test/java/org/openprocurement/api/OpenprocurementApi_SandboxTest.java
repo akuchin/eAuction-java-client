@@ -12,12 +12,12 @@ import javax.ws.rs.NotFoundException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.openprocurement.api.OpenprocurementClient.SANDBOX_LATEST_URL;
-import static org.openprocurement.api.OpenprocurementClient.newProxyClient;
+import static org.openprocurement.api.OpenprocurementClient.newApiClient;
 
-public class OpenprocurementService_SandboxTest {
-    final static Logger logger = Logger.getLogger(OpenprocurementService_SandboxTest.class);
+public class OpenprocurementApi_SandboxTest {
+    final static Logger logger = Logger.getLogger(OpenprocurementApi_SandboxTest.class);
 
-    private OpenprocurementService sandboxClient;
+    private OpenprocurementApi sandboxClient;
 
     @Before
     public void jerseyLogger() throws Exception {
@@ -27,7 +27,7 @@ public class OpenprocurementService_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        sandboxClient = newProxyClient(SANDBOX_LATEST_URL);
+        sandboxClient = newApiClient(SANDBOX_LATEST_URL);
     }
 
     @Test
@@ -43,19 +43,20 @@ public class OpenprocurementService_SandboxTest {
     }
 
     @Test
-    public void testGetTenders() throws Exception {
-        final TenderList tenders = sandboxClient.getTenders();
+    public void testGetTendersPage() throws Exception {
+        final TenderList tenders = sandboxClient.getTendersPage();
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.debug(String.format("Found [%d] trades", tenders.getData().size()));
     }
 
     @Test
-    public void testGetTenders_Offset() throws Exception {
+    public void testGetTendersPage_Offset() throws Exception {
         final DateTime offset = DateTime.now().minusDays(1);
-        final TenderList tenders = sandboxClient.getTenders(offset);
+        final TenderList tenders = sandboxClient.getTendersPage(offset);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.debug(String.format("Found [%d] trades with offset [%s]", tenders.getData().size(), offset));
     }
+
 }

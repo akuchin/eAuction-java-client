@@ -139,6 +139,7 @@
           <generateBuilders>true</generateBuilders>
           <includeAdditionalProperties>false</includeAdditionalProperties>
           <sourceType>jsonschema</sourceType>
+          <serializable>true</serializable>
         </configuration>
         <executions>
           <execution>
