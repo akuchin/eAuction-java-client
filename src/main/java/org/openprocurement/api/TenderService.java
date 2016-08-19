@@ -57,7 +57,7 @@ public class TenderService {
                 res.size(), maxAmount, end - start));
 
         if (maxAmount != null && res.size() > maxAmount) {
-            return Collections.unmodifiableList(res.subList(0, maxAmount -1));
+            return Collections.unmodifiableList(res.subList(0, maxAmount ));
         } else {
             return Collections.unmodifiableList(res);
         }

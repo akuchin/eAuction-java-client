@@ -32,8 +32,146 @@
         "scheme",
         "id"
       ]
+    },
+    "contactPoint": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "name_en": {
+          "type": "string"
+        },
+        "name_ru": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "faxNumber": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "streetAddress": {
+          "type": "string"
+        },
+        "locality": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "countryName": {
+          "type": "string"
+        },
+        "countryName_en": {
+          "type": "string"
+        },
+        "countryName_ru": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "countryName"
+      ]
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "documentOf": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "string",
+            "enum": [
+              "tenderNotice", "awardNotice", "contractNotice",
+              "notice", "biddingDocuments", "technicalSpecifications",
+              "evaluationCriteria", "clarifications", "shortlistedFirms",
+              "riskProvisions", "billOfQuantity", "bidders", "conflictOfInterest",
+              "debarments", "evaluationReports", "winningBid", "complaints",
+              "contractSigned", "contractArrangements", "contractSchedule",
+              "contractAnnexe", "contractGuarantees", "subContract",
+              "eligibilityCriteria", "contractProforma", "commercialProposal",
+              "qualificationDocuments", "eligibilityDocuments" ]
+          },
+          "datePublished": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "relatedItem": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "format",
+          "url",
+          "title",
+          "documentOf",
+          "datePublished",
+          "dateModified",
+          "id"
+        ]
+      }
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "valueAddedTaxIncluded": {
+          "type": "boolean",
+          "default": "true"
+        }
+      },
+      "required": [
+        "currency",
+        "amount",
+        "valueAddedTaxIncluded"
+      ]
     }
+
+
   },
+  // end of definitions
 
   "type": "object",
   "properties": {
@@ -76,48 +214,17 @@
         "description": {
           "type": "string"
         },
+        "description_ru": {
+          "type": "string"
+        },
+        "description_en": {
+          "type": "string"
+        },
         "title": {
           "type": "string"
         },
         "documents": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "format": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "documentOf": {
-                "type": "string"
-              },
-              "datePublished": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "dateModified": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "format",
-              "url",
-              "title",
-              "documentOf",
-              "datePublished",
-              "dateModified",
-              "id"
-            ]
-          }
+          "$ref": "#/definitions/documents"
         },
         "contracts": {
           "type": "array",
@@ -128,42 +235,7 @@
                 "type": "string"
               },
               "documents": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "format": {
-                      "type": "string"
-                    },
-                    "url": {
-                      "type": "string"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "documentOf": {
-                      "type": "string"
-                    },
-                    "datePublished": {
-                      "type": "string"
-                    },
-                    "dateModified": {
-                      "type": "string"
-                    },
-                    "id": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "format",
-                    "url",
-                    "title",
-                    "documentOf",
-                    "datePublished",
-                    "dateModified",
-                    "id"
-                  ]
-                }
+                "$ref": "#/definitions/documents"
               },
               "awardID": {
                 "type": "string"
@@ -269,12 +341,32 @@
                   "startDate": {
                     "type": "string",
                     "format" : "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format" : "date-time"
                   }
                 },
                 "required": [
                   "startDate"
                 ]
               },
+              "deliveryLocation": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string"
+                  },
+                  "longitude": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ]
+              },
+              "deliveryAddress" : {"$ref": "#/definitions/address"},
               "id": {
                 "type": "string"
               },
@@ -310,26 +402,46 @@
             ]
           }
         },
+        "cancellations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format":"date-time"
+              },
+              "status": {
+                "type": "string",
+                "default":"pending",
+                "enum":["pending", "active"]
+              },
+              "reason": {
+                "type": "string"
+              },
+              "cancellationOf": {
+                "type": "string",
+                "default":"tender",
+                "enum":["tender", "lot"]
+              },
+              "documents": {
+                "$ref": "#/definitions/documents"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "date",
+              "status",
+              "reason",
+              "cancellationOf",
+              "id"
+            ]
+          }
+        },
         "value": {
-          "type": "object",
-          "properties": {
-            "currency": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "number",
-              "minimum": 0
-            },
-            "valueAddedTaxIncluded": {
-              "type": "boolean",
-              "default": "true"
-            }
-          },
-          "required": [
-            "currency",
-            "amount",
-            "valueAddedTaxIncluded"
-          ]
+          "$ref": "#/definitions/value"
         },
         "submissionMethod": {
           "type": "string",
@@ -345,69 +457,22 @@
           "type": "object",
           "properties": {
             "contactPoint": {
-              "type": "object",
-              "properties": {
-                "telephone": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "name_en": {
-                  "type": "string"
-                },
-                "name_ru": {
-                  "type": "string"
-                },
-                "telephone": {
-                  "type": "string"
-                },
-                "faxNumber": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name"
-              ]
+              "$ref": "#/definitions/contactPoint"
             },
-            "identifier": {"$ref": "#/definitions/identifier"},
+            "identifier": {
+              "$ref": "#/definitions/identifier"
+            },
             "name": {
               "type": "string"
             },
+            "name_ru": {
+              "type": "string"
+            },
+            "name_en": {
+              "type": "string"
+            },
             "address": {
-              "type": "object",
-              "properties": {
-                "streetAddress": {
-                  "type": "string"
-                },
-                "locality": {
-                  "type": "string"
-                },
-                "region": {
-                  "type": "string"
-                },
-                "postalCode": {
-                  "type": "string"
-                },
-                "countryName": {
-                  "type": "string"
-                },
-                "countryName_en": {
-                  "type": "string"
-                },
-                "countryName_ru": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "countryName"
-              ]
+              "$ref": "#/definitions/address"
             }
           },
           "required": [
@@ -418,24 +483,7 @@
           ]
         },
         "minimalStep": {
-          "type": "object",
-          "properties": {
-            "currency": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "number",
-              "minimum": 0
-            },
-            "valueAddedTaxIncluded": {
-              "type": "boolean"
-            }
-          },
-          "required": [
-            "currency",
-            "amount",
-            "valueAddedTaxIncluded"
-          ]
+          "$ref": "#/definitions/value"
         },
         "status": {
           "type": "string",
@@ -462,6 +510,62 @@
             "singleBidOnly"
           ]
         },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "author": {
+                "type": "object",
+                "properties": {
+                  "contactPoint": {"$ref": "#/definitions/contactPoint"},
+                  "identifier": {"$ref": "#/definitions/identifier"},
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {"$ref": "#/definitions/address"}
+                },
+                "required": [
+                  "contactPoint",
+                  "identifier",
+                  "name",
+                  "address"
+                ]
+              },
+              "date": {
+                "type": "string",
+                "format":"date-time"
+              },
+              "id": {
+                "type": "string"
+              },
+              "questionOf": {
+                "type": "string"
+              },
+              "relatedItem": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "description",
+              "title",
+              "author",
+              "date",
+              "id",
+              "questionOf"
+            ]
+          }
+        },
+
         "enquiryPeriod": {
           "type": "object",
           "properties": {
@@ -533,44 +637,7 @@
                 "type": "string"
               },
               "documents": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "format": {
-                      "type": "string"
-                    },
-                    "url": {
-                      "type": "string"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "documentOf": {
-                      "type": "string"
-                    },
-                    "datePublished": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "dateModified": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "id": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "format",
-                    "url",
-                    "title",
-                    "documentOf",
-                    "datePublished",
-                    "dateModified",
-                    "id"
-                  ]
-                }
+                "$ref": "#/definitions/documents"
               },
               "complaintPeriod": {
                 "type": "object",
@@ -594,65 +661,12 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "contactPoint": {
-                      "type": "object",
-                      "properties": {
-                        "telephone": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "name_ru": {
-                          "type": "string"
-                        },
-                        "name_ein": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "telephone",
-                        "name",
-                        "email"
-                      ]
-                    },
+                    "contactPoint": {"$ref": "#/definitions/contactPoint"},
                     "identifier": {"$ref": "#/definitions/identifier"},
                     "name": {
                       "type": "string"
                     },
-                    "address": {
-                      "type": "object",
-                      "properties": {
-                        "postalCode": {
-                          "type": "string"
-                        },
-                        "countryName": {
-                          "type": "string"
-                        },
-                        "streetAddress": {
-                          "type": "string"
-                        },
-                        "region": {
-                          "type": "string"
-                        },
-                        "locality": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "postalCode",
-                        "countryName",
-                        "streetAddress",
-                        "region",
-                        "locality"
-                      ]
-                    }
+                    "address": {"$ref": "#/definitions/address"}
                   },
                   "required": [
                     "contactPoint",
@@ -666,23 +680,7 @@
                 "type": "string"
               },
               "value": {
-                "type": "object",
-                "properties": {
-                  "currency": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "integer"
-                  },
-                  "valueAddedTaxIncluded": {
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "currency",
-                  "amount",
-                  "valueAddedTaxIncluded"
-                ]
+                "$ref": "#/definitions/value"
               },
               "date": {
                 "type": "string",
@@ -719,89 +717,23 @@
               "id": {
                 "type": "string"
               },
+              "documents": {
+                "$ref": "#/definitions/documents"
+              },
               "value": {
-                "type": "object",
-                "properties": {
-                  "currency": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "integer"
-                  },
-                  "valueAddedTaxIncluded": {
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "currency",
-                  "amount",
-                  "valueAddedTaxIncluded"
-                ]
+                "$ref": "#/definitions/value"
               },
               "tenderers": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
-                    "contactPoint": {
-                      "type": "object",
-                      "properties": {
-                        "telephone": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "name_ru": {
-                          "type": "string"
-                        },
-                        "name_en": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "telephone",
-                        "name",
-                        "email"
-                      ]
-                    },
+                    "contactPoint": {"$ref": "#/definitions/contactPoint"},
                     "identifier": {"$ref": "#/definitions/identifier"},
                     "name": {
                       "type": "string"
                     },
-                    "address": {
-                      "type": "object",
-                      "properties": {
-                        "postalCode": {
-                          "type": "string"
-                        },
-                        "countryName": {
-                          "type": "string"
-                        },
-                        "streetAddress": {
-                          "type": "string"
-                        },
-                        "region": {
-                          "type": "string"
-                        },
-                        "locality": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "postalCode",
-                        "countryName",
-                        "streetAddress",
-                        "region",
-                        "locality"
-                      ]
-                    }
+                    "address": {"$ref": "#/definitions/address"}
                   },
                   "required": [
                     "contactPoint",
