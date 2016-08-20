@@ -130,6 +130,7 @@
         <configuration>
           <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
           <targetPackage>org.openprocurement.api.model</targetPackage>
+          <outputDirectory>${basedir}/src/main/java-gen</outputDirectory>
           <annotationStyle>jackson2</annotationStyle>
           <useJodaDates>true</useJodaDates>
           <includeConstructors>true</includeConstructors>
@@ -147,6 +148,21 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/src/main/java-gen</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
         <!-- configure the logging properties file to use when tests are run -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -158,7 +174,8 @@
             </java.util.logging.config.file>
           </systemPropertyVariables>
         </configuration>
-      </plugin>    </plugins>
+      </plugin>
+    </plugins>
   </build>
 
 
