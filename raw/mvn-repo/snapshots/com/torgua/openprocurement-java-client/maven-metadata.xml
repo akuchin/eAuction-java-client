@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.torgua</groupId>
+  <artifactId>openprocurement-java-client</artifactId>
+  <versioning>
+    <versions>
+      <version>0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160821130452</lastUpdated>
+  </versioning>
+</metadata>
