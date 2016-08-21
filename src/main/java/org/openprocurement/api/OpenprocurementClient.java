@@ -3,6 +3,7 @@ package org.openprocurement.api;
 import com.fasterxml.jackson.datatype.joda.JodaMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
 import org.glassfish.jersey.logging.LoggingFeature;
 
@@ -15,8 +16,20 @@ public class OpenprocurementClient {
 
     public static final URI SANDBOX_LATEST_URL = URI.create("https://api-sandbox.ea.openprocurement.org/api/0");
 
-    public static OpenprocurementApi newApiClient(URI rootUri) {
+    /**
+     * Creates a new client-side representation of a OpenprocurementApi.
+     * <p/>
+     *
+     * @param rootUri           resource uri.
+     * @param connectionTimeout Connect timeout interval, in milliseconds. A value of zero is equivalent to an interval of infinity.
+     * @param socketTimeout     WebTarget pointing to the resource or the parent of the resource.
+     * @return Instance of a class implementing the OpenprocurementApi interface.
+     */
+    public static OpenprocurementApi newApiClient(URI rootUri, long connectionTimeout, long socketTimeout) {
         final Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
+        client.property(ClientProperties.CONNECT_TIMEOUT, Long.toString(connectionTimeout));
+        client.property(ClientProperties.READ_TIMEOUT, Long.toString(socketTimeout));
+
         final WebTarget rootTarget = client.target(rootUri);
 
         // joda support

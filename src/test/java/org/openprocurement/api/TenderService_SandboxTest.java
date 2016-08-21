@@ -26,7 +26,7 @@ public class TenderService_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        tenderService = TenderService.newInstance(newApiClient(SANDBOX_LATEST_URL));
+        tenderService = TenderService.newInstance(newApiClient(SANDBOX_LATEST_URL, 1000, 1000));
     }
 
     @Test

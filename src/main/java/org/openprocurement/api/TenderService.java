@@ -1,12 +1,13 @@
 package org.openprocurement.api;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.openprocurement.api.model.Tender;
 import org.openprocurement.api.model.TenderList;
 import org.openprocurement.api.model.TenderShortData;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TenderService {
-    final static Logger logger = Logger.getLogger(TenderService.class);
+    final static Logger logger = LoggerFactory.getLogger(TenderService.class);
 
     private final OpenprocurementApi api;
 

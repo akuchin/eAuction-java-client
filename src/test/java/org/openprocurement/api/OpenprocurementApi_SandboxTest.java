@@ -27,7 +27,7 @@ public class OpenprocurementApi_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        sandboxClient = newApiClient(SANDBOX_LATEST_URL);
+        sandboxClient = newApiClient(SANDBOX_LATEST_URL, 1000, 1000);
     }
 
     @Test
