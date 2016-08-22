@@ -14,16 +14,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>${assertj.version}</version>
-    </dependency>
-    <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
@@ -68,29 +58,51 @@
       <artifactId>slf4j-api</artifactId>
       <version>1.7.21</version>
     </dependency>
+
+    <!-- Testing -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+      <version>${assertj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+      <version>${junit.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
+      <scope>test</scope>
       <version>1.7.21</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
+      <scope>test</scope>
       <version>1.7.21</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
+      <scope>test</scope>
       <version>2.6.2</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
+      <scope>test</scope>
       <version>1.7.21</version>
     </dependency>
 
-
-    <!-- Testing -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.9.5</version>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
 
@@ -171,6 +183,8 @@
             <java.util.logging.config.file>
               src/test/resources/logging.properties
             </java.util.logging.config.file>
+            <javax.net.ssl.trustStore>${basedir}/src/test/resources/sandbox.jks</javax.net.ssl.trustStore>
+            <javax.net.ssl.trustStorePassword>changeit</javax.net.ssl.trustStorePassword>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -185,13 +199,9 @@
   </build>
 
   <distributionManagement>
-    <repository>
-      <id>repo</id>
-      <url>https://akuchin/openprocurement-java-client/raw/mvn-repo/releases</url>
-    </repository>
     <snapshotRepository>
       <id>snapshot-repo</id>
-      <url>https://akuchin/openprocurement-java-client/raw/mvn-repo/snapshots</url>
+      <url>https://raw.github.com/akuchin/openprocurement-java-client/master/raw/mvn-repo/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
