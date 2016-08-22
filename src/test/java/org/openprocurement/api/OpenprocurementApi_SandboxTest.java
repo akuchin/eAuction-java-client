@@ -45,7 +45,7 @@ public class OpenprocurementApi_SandboxTest {
 
     @Test
     public void testGetTendersPage() throws Exception {
-        final TenderList tenders = sandboxClient.getTendersPage();
+        final TenderList tenders = sandboxClient.getTendersPage(null, OpenprocurementApi.DESCENDING_PARAM, null);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.debug(String.format("Found [%d] trades", tenders.getData().size()));
@@ -54,7 +54,7 @@ public class OpenprocurementApi_SandboxTest {
     @Test
     public void testGetTendersPage_Offset() throws Exception {
         final DateTime offset = DateTime.now().minusDays(1);
-        final TenderList tenders = sandboxClient.getTendersPage(offset);
+        final TenderList tenders = sandboxClient.getTendersPage(offset, OpenprocurementApi.DESCENDING_PARAM, null);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.debug(String.format("Found [%d] trades with offset [%s]", tenders.getData().size(), offset));

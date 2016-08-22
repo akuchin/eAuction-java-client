@@ -30,8 +30,8 @@ public class TenderService_SandboxTest {
     }
 
     @Test
-    public void testGetLatestTendersShortData() throws Exception {
-        final List<TenderShortData> latestTendersShortData = tenderService.getLatestTendersShortData(5);
+    public void testGetLatestTenderIds() throws Exception {
+        final List<TenderShortData> latestTendersShortData = tenderService.getLatestTendersIds(null, 5);
         assertEquals(5, latestTendersShortData.size());
     }
 

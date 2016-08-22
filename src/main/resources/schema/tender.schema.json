@@ -105,6 +105,9 @@
           "title": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "documentOf": {
             "type": "string"
           },

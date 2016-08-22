@@ -30,15 +30,15 @@ public class TenderService {
         return api.getTender(id);
     }
 
-    public List<TenderShortData> getLatestTendersShortData(Integer maxAmount) {
+    public List<TenderShortData> getLatestTendersIds(DateTime offsetParam, Integer maxAmount) {
         final Long start = DateTime.now().getMillis();
 
-        logger.debug(String.format("Fetching tender ids. Max amount [%d] ...", maxAmount));
-        DateTime offset = null;
+        logger.debug(String.format("Fetching tender ids with offset [%s] and max amount [%d] ...", offsetParam, maxAmount));
+        DateTime offset = offsetParam;
         final List<TenderShortData> res = new ArrayList<>();
         while (maxAmount == null || maxAmount.intValue() > res.size()) {
             logger.debug(String.format("Fetching tender ids page with offset [%s]", offset));
-            final TenderList tendersPage = (offset != null) ? api.getTendersPage(offset) : api.getTendersPage();
+            final TenderList tendersPage = api.getTendersPage(offset, OpenprocurementApi.DESCENDING_PARAM, null); // offset is nullable
             final List<TenderShortData> fetched = tendersPage.getData() != null ? tendersPage.getData() : Collections.EMPTY_LIST;
             logger.debug(String.format("Fetched [%d] tender ids from the page", fetched.size()));
             res.addAll(fetched);
@@ -65,7 +65,7 @@ public class TenderService {
     public List<Tender> getLatestTenders(Integer maxAmount) {
         final Long start = DateTime.now().getMillis();
         logger.debug(String.format("Fetching latest tenders. Max amount [%d] ...", maxAmount));
-        final List<TenderShortData> shortDataList = getLatestTendersShortData(maxAmount);
+        final List<TenderShortData> shortDataList = getLatestTendersIds(null, maxAmount);
         final List<Tender> tenderList = shortDataList.stream()
                 .map(sd -> getTender(sd.getId()))
                 .collect(Collectors.toList());
