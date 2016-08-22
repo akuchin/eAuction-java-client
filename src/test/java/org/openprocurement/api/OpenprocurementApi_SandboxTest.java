@@ -11,7 +11,8 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import javax.ws.rs.NotFoundException;
 
 import static org.junit.Assert.assertNotNull;
-import static org.openprocurement.api.OpenprocurementClient.SANDBOX_LATEST_URL;
+import static org.openprocurement.api.OpenprocurementClient.SANDBOX_0_LATEST_URL;
+import static org.openprocurement.api.OpenprocurementClient.SANDBOX_2_3_URL;
 import static org.openprocurement.api.OpenprocurementClient.newApiClient;
 
 public class OpenprocurementApi_SandboxTest {
@@ -27,12 +28,12 @@ public class OpenprocurementApi_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        sandboxClient = newApiClient(SANDBOX_LATEST_URL, 3000, 3000);
+        sandboxClient = newApiClient(SANDBOX_2_3_URL, 3000, 3000);
     }
 
     @Test
     public void testGetSingleTender() throws Exception {
-        final Tender data = sandboxClient.getTender("34c8236d4df4448dbf849c285f6bbf7a");
+        final Tender data = sandboxClient.getTender("1aca16c4422a472ead40917ae29f4fab");
         assertNotNull(data);
         logger.debug(String.format("Found trade --> %s", data));
     }

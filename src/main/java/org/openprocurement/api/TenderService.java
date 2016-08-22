@@ -2,8 +2,6 @@ package org.openprocurement.api;
 
 import org.slf4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Period;
 import org.openprocurement.api.model.Tender;
 import org.openprocurement.api.model.TenderList;
 import org.openprocurement.api.model.TenderShortData;

@@ -10,7 +10,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.openprocurement.api.OpenprocurementClient.SANDBOX_LATEST_URL;
+import static org.openprocurement.api.OpenprocurementClient.SANDBOX_0_LATEST_URL;
 import static org.openprocurement.api.OpenprocurementClient.newApiClient;
 
 public class TenderService_SandboxTest {
@@ -26,7 +26,7 @@ public class TenderService_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        tenderService = TenderService.newInstance(newApiClient(SANDBOX_LATEST_URL, 3000, 3000));
+        tenderService = TenderService.newInstance(newApiClient(SANDBOX_0_LATEST_URL, 3000, 3000));
     }
 
     @Test

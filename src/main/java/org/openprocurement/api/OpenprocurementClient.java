@@ -14,7 +14,9 @@ import java.net.URI;
 
 public class OpenprocurementClient {
 
-    public static final URI SANDBOX_LATEST_URL = URI.create("https://api-sandbox.ea.openprocurement.org/api/0");
+    public static final URI SANDBOX_0_LATEST_URL = URI.create("https://api-sandbox.ea.openprocurement.org/api/0");
+    public static final URI SANDBOX_2_3_URL = URI.create("https://api-sandbox.ea.openprocurement.org/api/dev");
+    public static final URI SANDBOX_2_3_PUBLIC_URL = URI.create("http://public.api-sandbox.ea.openprocurement.org/api/dev");
 
     /**
      * Creates a new client-side representation of a OpenprocurementApi.
