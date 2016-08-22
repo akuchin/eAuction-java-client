@@ -1,14 +1,15 @@
 package org.openprocurement.api;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openprocurement.api.model.Tender;
 import org.openprocurement.api.model.TenderShortData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -16,12 +17,13 @@ import static org.openprocurement.api.OpenprocurementClient.SANDBOX_0_LATEST_URL
 import static org.openprocurement.api.OpenprocurementClient.newApiClient;
 
 public class TenderService_SandboxTest {
-    final static Logger logger = Logger.getLogger(OpenprocurementApi_SandboxTest.class);
+    final static Logger logger = LoggerFactory.getLogger(TenderService_SandboxTest.class);
 
     private TenderService tenderService;
 
-    @Before
-    public void jerseyLogger() throws Exception {
+    @BeforeClass
+    public static void jerseyLogger() throws Exception {
+        java.util.logging.Logger.getLogger("").setLevel(java.util.logging.Level.FINEST);
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
     }
@@ -50,7 +52,7 @@ public class TenderService_SandboxTest {
         final List<TenderShortData> ids = tenderService.getTendersIds(null,
                 5, fetchUntil, true, true, false);
         assertEquals(5, ids.size());
-        logger.debug(String.format("Found [%d] latest trades until [%s]", ids.size(), fetchUntil));
+        logger.info(String.format("Found [%d] latest trades until [%s]", ids.size(), fetchUntil));
     }
 
     @Test
@@ -58,6 +60,6 @@ public class TenderService_SandboxTest {
         final int maxAmount = 20;
         final List<Tender> latestTenders = tenderService.getLatestTenders(maxAmount);
         assertTrue(latestTenders.size() >= 10);
-        logger.debug(String.format("Found [%d] trades of [%d]", latestTenders.size(), maxAmount));
+        logger.info(String.format("Found [%d] trades of [%d]", latestTenders.size(), maxAmount));
     }
 }

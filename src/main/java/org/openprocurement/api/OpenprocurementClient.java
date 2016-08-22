@@ -28,7 +28,10 @@ public class OpenprocurementClient {
      * @return Instance of a class implementing the OpenprocurementApi interface.
      */
     public static OpenprocurementApi newApiClient(URI rootUri, long connectionTimeout, long socketTimeout) {
-        final Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
+
+        final ClientConfig clientConfig = new ClientConfig();
+        clientConfig.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_ANY);
+        final Client client = ClientBuilder.newClient(clientConfig);
         client.property(ClientProperties.CONNECT_TIMEOUT, Long.toString(connectionTimeout));
         client.property(ClientProperties.READ_TIMEOUT, Long.toString(socketTimeout));
 

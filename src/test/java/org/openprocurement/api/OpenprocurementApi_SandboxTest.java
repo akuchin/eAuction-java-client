@@ -1,14 +1,18 @@
 package org.openprocurement.api;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openprocurement.api.model.Tender;
 import org.openprocurement.api.model.TenderList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.ws.rs.NotFoundException;
+
+import java.util.logging.Level;
 
 import static org.junit.Assert.assertNotNull;
 import static org.openprocurement.api.OpenprocurementClient.SANDBOX_0_LATEST_URL;
@@ -16,12 +20,13 @@ import static org.openprocurement.api.OpenprocurementClient.SANDBOX_2_3_URL;
 import static org.openprocurement.api.OpenprocurementClient.newApiClient;
 
 public class OpenprocurementApi_SandboxTest {
-    final static Logger logger = Logger.getLogger(OpenprocurementApi_SandboxTest.class);
+    final static Logger logger = LoggerFactory.getLogger(OpenprocurementApi_SandboxTest.class);
 
     private OpenprocurementApi sandboxClient;
 
-    @Before
-    public void jerseyLogger() throws Exception {
+    @BeforeClass
+    public static void jerseyLogger() throws Exception {
+        java.util.logging.Logger.getLogger("").setLevel(java.util.logging.Level.FINEST);
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
     }
@@ -35,7 +40,7 @@ public class OpenprocurementApi_SandboxTest {
     public void testGetSingleTender() throws Exception {
         final Tender data = sandboxClient.getTender("1aca16c4422a472ead40917ae29f4fab");
         assertNotNull(data);
-        logger.debug(String.format("Found trade --> %s", data));
+        logger.info(String.format("Found trade --> %s", data));
     }
 
     @Test(expected = NotFoundException.class)
@@ -48,7 +53,7 @@ public class OpenprocurementApi_SandboxTest {
         final TenderList tenders = sandboxClient.getTendersPage(null, OpenprocurementApi.DESCENDING_PARAM, null);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
-        logger.debug(String.format("Found [%d] trades", tenders.getData().size()));
+        logger.info(String.format("Found [%d] trades", tenders.getData().size()));
     }
 
     @Test
@@ -57,7 +62,7 @@ public class OpenprocurementApi_SandboxTest {
         final TenderList tenders = sandboxClient.getTendersPage(offset, OpenprocurementApi.DESCENDING_PARAM, null);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
-        logger.debug(String.format("Found [%d] trades with offset [%s]", tenders.getData().size(), offset));
+        logger.info(String.format("Found [%d] trades with offset [%s]", tenders.getData().size(), offset));
     }
 
 }
