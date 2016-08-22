@@ -192,13 +192,9 @@
   </build>
 
   <distributionManagement>
-    <repository>
-      <id>repo</id>
-      <url>https://akuchin/openprocurement-java-client/raw/mvn-repo/releases</url>
-    </repository>
     <snapshotRepository>
       <id>snapshot-repo</id>
-      <url>https://akuchin/openprocurement-java-client/raw/mvn-repo/snapshots</url>
+      <url>https://raw.github.com/akuchin/openprocurement-java-client/master/raw/mvn-repo/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 </project>

@@ -37,7 +37,7 @@ public class TenderService_SandboxTest {
 
     @Test
     public void testGetLatestTeners() throws Exception {
-        final int maxAmount = 200;
+        final int maxAmount = 20;
         final List<Tender> latestTenders = tenderService.getLatestTenders(maxAmount);
         assertTrue(latestTenders.size() >= 10);
         logger.debug(String.format("Found [%d] trades of [%d]", latestTenders.size(), maxAmount));
