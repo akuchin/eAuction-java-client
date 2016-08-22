@@ -11,6 +11,7 @@ public interface OpenprocurementApi {
 
     String DESCENDING_PARAM = "1";
     String OPT_PRETTY_PARAM = "1";
+    String FEED_CHANGES_PARAM = "changes";
 
     @GET
     @Path("/auctions/{id}")
@@ -22,7 +23,15 @@ public interface OpenprocurementApi {
     @Produces(MediaType.APPLICATION_JSON)
     TenderList getTendersPage(@QueryParam("offset") DateTime offset,
                               @QueryParam("descending") String descending,
-                              // @QueryParam("feed") String feed,  // not supported due to offset mapping
+                              @QueryParam("opt_pretty") String opt_pretty
+                              );
+
+    @GET
+    @Path("/auctions")
+    @Produces(MediaType.APPLICATION_JSON)
+    TenderList getTendersPage(@QueryParam("offset") String offsetStr,
+                              @QueryParam("descending") String descending,
+                              @QueryParam("feed") String feed,
                               @QueryParam("opt_pretty") String opt_pretty
                               );
 }

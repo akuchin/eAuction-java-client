@@ -1,47 +1,38 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "javaType": "org.openprocurement.api.model.TenderList",
+  "definitions": {
+    "page": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "string"
+          //"format": "date-time"   // could be also a string
+        }
+      },
+      "required": [
+        "path",
+        "uri",
+        "offset"
+      ]
+    }
+
+  },
+  // end of definitions
+
   "type": "object",
   "properties": {
     "next_page": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        },
-        "offset": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "required": [
-        "path",
-        "uri",
-        "offset"
-      ]
+      "$ref": "#/definitions/page"
     },
     "prev_page": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        },
-        "offset": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "required": [
-        "path",
-        "uri",
-        "offset"
-      ]
+      "$ref": "#/definitions/page"
     },
     "data": {
       "type": "array",
