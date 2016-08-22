@@ -167,6 +167,22 @@
         "amount",
         "valueAddedTaxIncluded"
       ]
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "startDate"
+      ]
     }
 
 
@@ -192,21 +208,7 @@
           "type": "string"
         },
         "awardPeriod": {
-          "type": "object",
-          "properties": {
-            "startDate": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "endDate": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          "required": [
-            "startDate",
-            "endDate"
-          ]
+          "$ref": "#/definitions/period"
         },
         "numberOfBids": {
           "type": "integer"
@@ -222,6 +224,19 @@
         },
         "title": {
           "type": "string"
+        },
+        "title_en": {
+          "type": "string"
+        },
+        "title_ru": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum" : ["test"]
         },
         "documents": {
           "$ref": "#/definitions/documents"
@@ -253,21 +268,11 @@
           }
         },
         "auctionPeriod": {
-          "type": "object",
-          "properties": {
-            "startDate": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "endDate": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          "required": [
-            "startDate",
-            "endDate"
-          ]
+          "$ref": "#/definitions/period"
+        },
+        "date": {
+          "type": "string",
+          "format":"date-time"
         },
         "submissionMethodDetails": {
           "type": "string"
@@ -336,20 +341,7 @@
                 }
               },
               "deliveryDate": {
-                "type": "object",
-                "properties": {
-                  "startDate": {
-                    "type": "string",
-                    "format" : "date-time"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "format" : "date-time"
-                  }
-                },
-                "required": [
-                  "startDate"
-                ]
+                "$ref": "#/definitions/period"
               },
               "deliveryLocation": {
                 "type": "object",
@@ -442,6 +434,10 @@
         },
         "value": {
           "$ref": "#/definitions/value"
+        },
+        "procurementMethodType": {
+          "type": "string",
+          "default":"belowThreshold"
         },
         "submissionMethod": {
           "type": "string",
@@ -567,21 +563,7 @@
         },
 
         "enquiryPeriod": {
-          "type": "object",
-          "properties": {
-            "startDate": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "endDate": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          "required": [
-            "startDate",
-            "endDate"
-          ]
+          "$ref": "#/definitions/period"
         },
         "features": {
           "type": "array",
@@ -640,21 +622,7 @@
                 "$ref": "#/definitions/documents"
               },
               "complaintPeriod": {
-                "type": "object",
-                "properties": {
-                  "startDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
-                },
-                "required": [
-                  "startDate",
-                  "endDate"
-                ]
+                "$ref": "#/definitions/period"
               },
               "suppliers": {
                 "type": "array",
@@ -707,6 +675,11 @@
           "items": {
             "type": "object",
             "properties": {
+              "status": {
+                "type": "string",
+                "default":"active",
+                "enum": ["active", "draft"]
+              },
               "date": {
                 "type": "string",
                 "format": "date-time"
@@ -763,21 +736,7 @@
           "type": "string"
         },
         "tenderPeriod": {
-          "type": "object",
-          "properties": {
-            "startDate": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "endDate": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          "required": [
-            "startDate",
-            "endDate"
-          ]
+          "$ref": "#/definitions/period"
         }
       },
       "required": [
