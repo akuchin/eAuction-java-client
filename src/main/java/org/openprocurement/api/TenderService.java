@@ -45,8 +45,9 @@ public class TenderService {
         final String feedChangesParam = changesFeed ? OpenprocurementApi.FEED_CHANGES_PARAM : null;
         final String prettyParam = pretty ? OpenprocurementApi.OPT_PRETTY_PARAM : null;
 
-        logger.debug(String.format("Fetching tender ids with offset [%s] max amount [%d] descending [%s] feed [%s] pretty [%s] ...",
-                offsetStr, maxAmount, descendingParam, feedChangesParam, prettyParam));
+        logger.debug(String.format("Fetching tender ids with offset [%s] max amount [%d] fetchUntil [%s] " +
+                        "descending [%s] feed [%s] pretty [%s] ...",
+                offsetStr, maxAmount, fetchUntil, descendingParam, feedChangesParam, prettyParam));
         String offsetStrParam = offsetStr;
         final List<TenderShortData> res = new ArrayList<>();
         while (!isMaxAmountReached(maxAmount, res) && !isFetchUntilReached(res, fetchUntil, descendingOrder)) {
@@ -69,6 +70,7 @@ public class TenderService {
         logger.debug(String.format("Fetched [%d] tender ids of [%d] with offset [%s] descending [%s] feed [%s] pretty [%s] in [%d] millis",
                 res.size(), maxAmount, offsetStr, descendingParam, feedChangesParam, prettyParam, end - start));
 
+        // TODO add cutout also by fetch until
         if (maxAmount != null && res.size() > maxAmount) {
             return Collections.unmodifiableList(res.subList(0, maxAmount ));
         } else {
