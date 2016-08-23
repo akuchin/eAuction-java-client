@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 public interface OpenprocurementApi {
 
-    enum Params {
+    public enum Params {
         DESCENDING_PARAM("1"),
         OPT_PRETTY_PARAM("1"),
         FEED_CHANGES_PARAM("changes");
@@ -20,7 +20,7 @@ public interface OpenprocurementApi {
         }
     }
 
-    enum Mode {
+    public enum Mode {
         TEST("test"),
         PROD(null),
         ALL("_all_");
