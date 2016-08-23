@@ -12,12 +12,10 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.ws.rs.NotFoundException;
 
-import java.util.logging.Level;
-
 import static org.junit.Assert.assertNotNull;
-import static org.openprocurement.api.OpenprocurementClient.SANDBOX_0_LATEST_URL;
-import static org.openprocurement.api.OpenprocurementClient.SANDBOX_2_3_URL;
-import static org.openprocurement.api.OpenprocurementClient.newApiClient;
+import static org.openprocurement.api.OpenprocurementClientFactory.SANDBOX_2_3_URL;
+import static org.openprocurement.api.OpenprocurementClientFactory.newApiProxyClient;
+import static org.openprocurement.api.OpenprocurementApi.Params.*;
 
 public class OpenprocurementApi_SandboxTest {
     final static Logger logger = LoggerFactory.getLogger(OpenprocurementApi_SandboxTest.class);
@@ -33,7 +31,7 @@ public class OpenprocurementApi_SandboxTest {
 
     @Before
     public void setUp() throws Exception {
-        sandboxClient = newApiClient(SANDBOX_2_3_URL, 3000, 3000);
+        sandboxClient = newApiProxyClient(SANDBOX_2_3_URL, 3000, 3000);
     }
 
     @Test
@@ -50,7 +48,8 @@ public class OpenprocurementApi_SandboxTest {
 
     @Test
     public void testGetTendersPage() throws Exception {
-        final TenderList tenders = sandboxClient.getTendersPage(null, OpenprocurementApi.DESCENDING_PARAM, null);
+        final TenderList tenders = sandboxClient.getTendersPage(null, DESCENDING_PARAM.value, null,
+                OpenprocurementApi.Mode.ALL.value);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.info(String.format("Found [%d] trades", tenders.getData().size()));
@@ -59,7 +58,8 @@ public class OpenprocurementApi_SandboxTest {
     @Test
     public void testGetTendersPage_Offset() throws Exception {
         final DateTime offset = DateTime.now().minusDays(1);
-        final TenderList tenders = sandboxClient.getTendersPage(offset, OpenprocurementApi.DESCENDING_PARAM, null);
+        final TenderList tenders = sandboxClient.getTendersPage(offset, DESCENDING_PARAM.value, null,
+                OpenprocurementApi.Mode.ALL.value);
         assertNotNull(tenders);
         assertNotNull(tenders.getData());
         logger.info(String.format("Found [%d] trades with offset [%s]", tenders.getData().size(), offset));

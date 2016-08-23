@@ -273,6 +273,10 @@
         "auctionPeriod": {
           "$ref": "#/definitions/period"
         },
+        "next_check": {
+          "type": "string",
+          "format":"date-time"
+        },
         "date": {
           "type": "string",
           "format":"date-time"

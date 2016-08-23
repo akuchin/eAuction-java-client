@@ -9,9 +9,27 @@ import javax.ws.rs.core.MediaType;
 
 public interface OpenprocurementApi {
 
-    String DESCENDING_PARAM = "1";
-    String OPT_PRETTY_PARAM = "1";
-    String FEED_CHANGES_PARAM = "changes";
+    enum Params {
+        DESCENDING_PARAM("1"),
+        OPT_PRETTY_PARAM("1"),
+        FEED_CHANGES_PARAM("changes");
+
+        final public String value;
+        Params(String value) {
+            this.value = value;
+        }
+    }
+
+    enum Mode {
+        TEST("test"),
+        PROD(null),
+        ALL("_all_");
+
+        final public String value;
+        Mode(String value) {
+            this.value = value;
+        }
+    }
 
     @GET
     @Path("/auctions/{id}")
@@ -23,7 +41,8 @@ public interface OpenprocurementApi {
     @Produces(MediaType.APPLICATION_JSON)
     TenderList getTendersPage(@QueryParam("offset") DateTime offset,
                               @QueryParam("descending") String descending,
-                              @QueryParam("opt_pretty") String opt_pretty
+                              @QueryParam("opt_pretty") String opt_pretty,
+                              @QueryParam("mode") String mode
                               );
 
     @GET
@@ -32,6 +51,7 @@ public interface OpenprocurementApi {
     TenderList getTendersPage(@QueryParam("offset") String offsetStr,
                               @QueryParam("descending") String descending,
                               @QueryParam("feed") String feed,
-                              @QueryParam("opt_pretty") String opt_pretty
+                              @QueryParam("opt_pretty") String opt_pretty,
+                              @QueryParam("mode") String mode
                               );
 }

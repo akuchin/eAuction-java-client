@@ -9,7 +9,10 @@ import org.openprocurement.api.model.TenderList;
 import org.openprocurement.api.model.TenderShortData;
 import org.slf4j.LoggerFactory;
 
+import static org.openprocurement.api.OpenprocurementApi.Params.*;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,24 +39,29 @@ public class TenderService {
 
     public List<TenderShortData> getLatestTendersIds(DateTime offset, Integer maxAmount) {
         final String offsetStrParam = offset != null ? dateTimeFormat.print(offset) : null;
-        return getTendersIds(offsetStrParam, maxAmount, null, true, false, false);
+        return getTendersIds(offsetStrParam, maxAmount, null, OpenprocurementApi.Mode.PROD, DESCENDING_PARAM);
     }
     public List<TenderShortData> getTendersIds(String offsetStr, Integer maxAmount, DateTime fetchUntil,
-                                               boolean descendingOrder, boolean changesFeed, boolean pretty) {
+                                               OpenprocurementApi.Mode mode, OpenprocurementApi.Params ... params) {
         final Long start = DateTime.now().getMillis();
-        final String descendingParam = descendingOrder ? OpenprocurementApi.DESCENDING_PARAM : null;
-        final String feedChangesParam = changesFeed ? OpenprocurementApi.FEED_CHANGES_PARAM : null;
-        final String prettyParam = pretty ? OpenprocurementApi.OPT_PRETTY_PARAM : null;
+
+        // params resolver
+        final List<OpenprocurementApi.Params> paramsList = Arrays.asList(params);
+        final boolean descendingOrder = paramsList.contains(DESCENDING_PARAM);
+        final String descendingParam = descendingOrder ? DESCENDING_PARAM.value : null;
+        final String feedChangesParam = paramsList.contains(FEED_CHANGES_PARAM) ? FEED_CHANGES_PARAM.value : null;
+        final String prettyParam = paramsList.contains(OPT_PRETTY_PARAM) ? OPT_PRETTY_PARAM.value : null;
+        final String modeParam = (mode != null) ? mode.value : null;
 
         logger.debug(String.format("Fetching tender ids with offset [%s] max amount [%d] fetchUntil [%s] " +
-                        "descending [%s] feed [%s] pretty [%s] ...",
-                offsetStr, maxAmount, fetchUntil, descendingParam, feedChangesParam, prettyParam));
+                        "mode [%s] parameters [%s]...",
+                offsetStr, maxAmount, fetchUntil, mode, params));
         String offsetStrParam = offsetStr;
         final List<TenderShortData> res = new ArrayList<>();
         while (!isMaxAmountReached(maxAmount, res) && !isFetchUntilReached(res, fetchUntil, descendingOrder)) {
-            logger.debug(String.format("Fetching tender ids page with offset [%s] descending [%s] feed [%s] pretty [%s] ...",
-                    offsetStrParam, descendingParam, feedChangesParam, prettyParam));
-            final TenderList tendersPage = api.getTendersPage(offsetStrParam, descendingParam, feedChangesParam, prettyParam);
+            logger.debug(String.format("Fetching tender ids page with offset [%s] mode [%s] parameters [%s] ...",
+                    offsetStrParam, mode, params));
+            final TenderList tendersPage = api.getTendersPage(offsetStrParam, descendingParam, feedChangesParam, prettyParam, modeParam);
             final List<TenderShortData> fetched = tendersPage.getData() != null ? tendersPage.getData() : Collections.EMPTY_LIST;
             logger.debug(String.format("Fetched [%d] tender ids from the page", fetched.size()));
             res.addAll(fetched);
