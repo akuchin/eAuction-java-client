@@ -12,21 +12,12 @@ public interface OpenprocurementApi {
     public enum Params {
         DESCENDING_PARAM("1"),
         OPT_PRETTY_PARAM("1"),
-        FEED_CHANGES_PARAM("changes");
+        FEED_CHANGES_PARAM("changes"),
+        MODE_TEST_PARAM("test"),
+        MODE_ALL_PARAM("_all_");
 
         final public String value;
         Params(String value) {
-            this.value = value;
-        }
-    }
-
-    public enum Mode {
-        TEST("test"),
-        PROD(null),
-        ALL("_all_");
-
-        final public String value;
-        Mode(String value) {
             this.value = value;
         }
     }

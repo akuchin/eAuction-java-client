@@ -43,8 +43,8 @@ public class TenderService_SandboxTest {
 
     @Test
     public void testGetTenderIds_Offset_ChangingFeed() throws Exception {
-        final List<TenderShortData> latestTendersShortData = tenderService.getTendersIds("aad2b219e005d65f0ec5b9967718bc80",
-                5, null, OpenprocurementApi.Mode.ALL, OpenprocurementApi.Params.DESCENDING_PARAM);
+        final List<TenderShortData> latestTendersShortData = tenderService.getTendersIds("664f320cdd60482cb7c9cd2a750e584a",
+                5, null, MODE_ALL_PARAM, DESCENDING_PARAM);
         assertEquals(5, latestTendersShortData.size());
     }
 
@@ -52,7 +52,7 @@ public class TenderService_SandboxTest {
     public void testGetLastTenderIds_For2Days() throws Exception {
         final DateTime fetchUntil = DateTime.now().minusDays(1).withTimeAtStartOfDay();
         final List<TenderShortData> ids = tenderService.getTendersIds(null,
-                5, fetchUntil, OpenprocurementApi.Mode.ALL, DESCENDING_PARAM,FEED_CHANGES_PARAM);
+                5, fetchUntil, MODE_ALL_PARAM, DESCENDING_PARAM,FEED_CHANGES_PARAM);
         assertEquals(5, ids.size());
         logger.info(String.format("Found [%d] latest trades until [%s]", ids.size(), fetchUntil));
     }

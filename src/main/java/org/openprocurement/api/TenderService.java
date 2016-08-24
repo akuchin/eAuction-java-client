@@ -39,10 +39,10 @@ public class TenderService {
 
     public List<TenderShortData> getLatestTendersIds(DateTime offset, Integer maxAmount) {
         final String offsetStrParam = offset != null ? dateTimeFormat.print(offset) : null;
-        return getTendersIds(offsetStrParam, maxAmount, null, OpenprocurementApi.Mode.PROD, DESCENDING_PARAM);
+        return getTendersIds(offsetStrParam, maxAmount, null, DESCENDING_PARAM);
     }
     public List<TenderShortData> getTendersIds(String offsetStr, Integer maxAmount, DateTime fetchUntil,
-                                               OpenprocurementApi.Mode mode, OpenprocurementApi.Params ... params) {
+                                               OpenprocurementApi.Params ... params) {
         final Long start = DateTime.now().getMillis();
 
         // params resolver
@@ -51,16 +51,17 @@ public class TenderService {
         final String descendingParam = descendingOrder ? DESCENDING_PARAM.value : null;
         final String feedChangesParam = paramsList.contains(FEED_CHANGES_PARAM) ? FEED_CHANGES_PARAM.value : null;
         final String prettyParam = paramsList.contains(OPT_PRETTY_PARAM) ? OPT_PRETTY_PARAM.value : null;
-        final String modeParam = (mode != null) ? mode.value : null;
+        final String modeParam = paramsList.contains(MODE_ALL_PARAM) ? MODE_ALL_PARAM.value :
+                paramsList.contains(MODE_TEST_PARAM) ? MODE_TEST_PARAM.value : null;
 
         logger.debug(String.format("Fetching tender ids with offset [%s] max amount [%d] fetchUntil [%s] " +
-                        "mode [%s] parameters [%s]...",
-                offsetStr, maxAmount, fetchUntil, mode, params));
+                        "parameters [%s]...",
+                offsetStr, maxAmount, fetchUntil, params));
         String offsetStrParam = offsetStr;
         final List<TenderShortData> res = new ArrayList<>();
         while (!isMaxAmountReached(maxAmount, res) && !isFetchUntilReached(res, fetchUntil, descendingOrder)) {
-            logger.debug(String.format("Fetching tender ids page with offset [%s] mode [%s] parameters [%s] ...",
-                    offsetStrParam, mode, params));
+            logger.debug(String.format("Fetching tender ids page with offset [%s] parameters [%s] ...",
+                    offsetStrParam, params));
             final TenderList tendersPage = api.getTendersPage(offsetStrParam, descendingParam, feedChangesParam, prettyParam, modeParam);
             final List<TenderShortData> fetched = tendersPage.getData() != null ? tendersPage.getData() : Collections.EMPTY_LIST;
             logger.debug(String.format("Fetched [%d] tender ids from the page", fetched.size()));
@@ -78,12 +79,24 @@ public class TenderService {
         logger.debug(String.format("Fetched [%d] tender ids of [%d] with offset [%s] descending [%s] feed [%s] pretty [%s] in [%d] millis",
                 res.size(), maxAmount, offsetStr, descendingParam, feedChangesParam, prettyParam, end - start));
 
-        // TODO add cutout also by fetch until
-        if (maxAmount != null && res.size() > maxAmount) {
-            return Collections.unmodifiableList(res.subList(0, maxAmount ));
-        } else {
-            return Collections.unmodifiableList(res);
+        final List<TenderShortData> cutResult = cutout(res, maxAmount, fetchUntil, descendingOrder);
+        return Collections.unmodifiableList(cutResult);
+    }
+
+    private List<TenderShortData> cutout(List<TenderShortData> idsList,
+                                         Integer maxAmount,
+                                         DateTime fetchUntil,
+                                         boolean isDescending) {
+        List<TenderShortData> res = idsList;
+        if (maxAmount != null && idsList.size() > maxAmount) {
+            res = idsList.subList(0, maxAmount);
         }
+        if (fetchUntil != null) {
+            res = res.stream()
+                    .filter(id -> !isFetchUntilReached(id, fetchUntil, isDescending))
+                    .collect(Collectors.toList());
+        }
+        return res;
     }
 
     private boolean isMaxAmountReached(Integer maxAmount, List<TenderShortData> res) {
@@ -93,11 +106,17 @@ public class TenderService {
     protected boolean isFetchUntilReached(List<TenderShortData> idsList, DateTime fetchUntil, boolean isDescending) {
         if (!idsList.isEmpty() && fetchUntil != null) {
             final TenderShortData last = idsList.get(idsList.size() - 1);
+            return isFetchUntilReached(last, fetchUntil, isDescending);
+        }
+        return false;
+    }
 
+    protected boolean isFetchUntilReached(TenderShortData id, DateTime fetchUntil, boolean isDescending) {
+        if (id != null && fetchUntil != null) {
             if (isDescending) {
-                return last.getDateModified().isBefore(fetchUntil);
+                return id.getDateModified().isBefore(fetchUntil);
             } else {
-                return last.getDateModified().isAfter(fetchUntil);
+                return id.getDateModified().isAfter(fetchUntil);
             }
         }
         return false;
