@@ -56,12 +56,12 @@ public class TenderService {
 
         logger.debug(String.format("Fetching tender ids with offset [%s] max amount [%d] fetchUntil [%s] " +
                         "parameters [%s]...",
-                offsetStr, maxAmount, fetchUntil, params));
+                offsetStr, maxAmount, fetchUntil, paramsList));
         String offsetStrParam = offsetStr;
         final List<TenderShortData> res = new ArrayList<>();
         while (!isMaxAmountReached(maxAmount, res) && !isFetchUntilReached(res, fetchUntil, descendingOrder)) {
             logger.debug(String.format("Fetching tender ids page with offset [%s] parameters [%s] ...",
-                    offsetStrParam, params));
+                    offsetStrParam, paramsList));
             final TenderList tendersPage = api.getTendersPage(offsetStrParam, descendingParam, feedChangesParam, prettyParam, modeParam);
             final List<TenderShortData> fetched = tendersPage.getData() != null ? tendersPage.getData() : Collections.EMPTY_LIST;
             logger.debug(String.format("Fetched [%d] tender ids from the page", fetched.size()));
@@ -75,11 +75,16 @@ public class TenderService {
             }
         }
 
-        final Long end = DateTime.now().getMillis();
-        logger.debug(String.format("Fetched [%d] tender ids of [%d] with offset [%s] descending [%s] feed [%s] pretty [%s] in [%d] millis",
-                res.size(), maxAmount, offsetStr, descendingParam, feedChangesParam, prettyParam, end - start));
-
         final List<TenderShortData> cutResult = cutout(res, maxAmount, fetchUntil, descendingOrder);
+
+        final Long end = DateTime.now().getMillis();
+        logger.debug(String.format("Fetching is done. Found [%d] tender ids. Fetched [%d] ids " +
+                        "max amount [%d] fetch until [%s] with offset [%s] descending [%s] " +
+                        "feed [%s] pretty [%s] mode [%s] in [%d] millis",
+                cutResult.size(), res.size(),
+                maxAmount, fetchUntil, offsetStr, descendingParam,
+                feedChangesParam, prettyParam, modeParam, end - start));
+
         return Collections.unmodifiableList(cutResult);
     }
 
