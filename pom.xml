@@ -149,6 +149,12 @@
           <includeAdditionalProperties>false</includeAdditionalProperties>
           <sourceType>jsonschema</sourceType>
           <serializable>true</serializable>
+          <fileExtensions>
+            <fileExtension>schema.json</fileExtension>
+          </fileExtensions>
+          <includes>
+            <include>**/*.schema.json</include>
+          </includes>
         </configuration>
         <executions>
           <execution>

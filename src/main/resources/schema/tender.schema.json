@@ -476,6 +476,10 @@
             },
             "address": {
               "$ref": "#/definitions/address"
+            },
+            "kind": {
+              "type" : "string",
+              "enum" : ["general","special","defense"]
             }
           },
           "required": [
