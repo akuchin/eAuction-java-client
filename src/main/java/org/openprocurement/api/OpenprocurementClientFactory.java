@@ -1,6 +1,9 @@
 package org.openprocurement.api;
 
-import com.fasterxml.jackson.datatype.joda.JodaMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
+import com.fasterxml.jackson.databind.deser.DefaultDeserializationContext;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
@@ -11,6 +14,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.net.URI;
+
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 public class OpenprocurementClientFactory {
 
@@ -50,11 +55,19 @@ public class OpenprocurementClientFactory {
     private static WebTarget rootTarget(URI rootUri, Client client) {
         final WebTarget rootTarget = client.target(rootUri);
 
-        // joda support
+        // custom jackson mapper
         final JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-        provider.setMapper(new JodaMapper());
+        provider.setMapper(jacksonMapper());
         rootTarget.register(provider);
         return rootTarget;
+    }
+
+    public static ObjectMapper jacksonMapper() {
+        final DefaultDeserializationContext dc = new CustomDeserializationContext(BeanDeserializerFactory.instance);
+        final ObjectMapper objectMapper = new ObjectMapper(null, null, dc);
+        objectMapper.registerModule(new JodaModule()); // joda support
+        objectMapper.disable(FAIL_ON_UNKNOWN_PROPERTIES);
+        return objectMapper;
     }
 
     private static Client jerseyClient(ClientConfig clientConfig, long connectionTimeout, long socketTimeout) {
