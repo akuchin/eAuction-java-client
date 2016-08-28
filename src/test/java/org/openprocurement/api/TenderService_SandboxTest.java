@@ -4,7 +4,6 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openprocurement.api.model.Tender;
 import org.openprocurement.api.model.TenderShortData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +35,6 @@ public class TenderService_SandboxTest {
     }
 
     @Test
-    public void testGetLatestTenderIds() throws Exception {
-        final List<TenderShortData> latestTendersShortData = tenderService.getLatestTendersIds(null, 2);
-        assertEquals(2, latestTendersShortData.size());
-    }
-
-    @Test
     public void testGetTenderIds_Offset_ChangingFeed() throws Exception {
         final List<TenderShortData> latestTendersShortData = tenderService.getTendersIds("664f320cdd60482cb7c9cd2a750e584a",
                 5, null, MODE_ALL_PARAM, DESCENDING_PARAM);
@@ -55,13 +48,5 @@ public class TenderService_SandboxTest {
                 5, fetchUntil, MODE_ALL_PARAM, DESCENDING_PARAM,FEED_CHANGES_PARAM);
         assertEquals(5, ids.size());
         logger.info(String.format("Found [%d] latest trades until [%s]", ids.size(), fetchUntil));
-    }
-
-    @Test
-    public void testGetLatestTeners() throws Exception {
-        final int maxAmount = 20;
-        final List<Tender> latestTenders = tenderService.getLatestTenders(maxAmount);
-        assertTrue(latestTenders.size() >= 2);
-        logger.info(String.format("Found [%d] trades of [%d]", latestTenders.size(), maxAmount));
     }
 }

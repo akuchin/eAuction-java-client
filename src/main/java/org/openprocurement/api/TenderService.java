@@ -32,15 +32,11 @@ public class TenderService {
         return new TenderService(api);
     }
 
-    public Tender getTender(String id) {
+    public Tender getTenderById(String id) {
         logger.debug(String.format("Fetching tender id=[%s] ...", id));
         return api.getTender(id);
     }
 
-    public List<TenderShortData> getLatestTendersIds(DateTime offset, Integer maxAmount) {
-        final String offsetStrParam = offset != null ? dateTimeFormat.print(offset) : null;
-        return getTendersIds(offsetStrParam, maxAmount, null, DESCENDING_PARAM);
-    }
     public List<TenderShortData> getTendersIds(String offsetStr, Integer maxAmount, DateTime fetchUntil,
                                                OpenprocurementApi.Params ... params) {
         final Long start = DateTime.now().getMillis();
@@ -126,21 +122,5 @@ public class TenderService {
         }
         return false;
     }
-
-    public List<Tender> getLatestTenders(Integer maxAmount) {
-        final Long start = DateTime.now().getMillis();
-        logger.debug(String.format("Fetching latest tenders. Max amount [%d] ...", maxAmount));
-        final List<TenderShortData> shortDataList = getLatestTendersIds(null, maxAmount);
-        final List<Tender> tenderList = shortDataList.stream()
-                .map(sd -> getTender(sd.getId()))
-                .collect(Collectors.toList());
-
-        final Long end = DateTime.now().getMillis();
-        logger.debug(String.format("Fetched [%d] latest tenders of [%d] in [%d] millis",
-                tenderList.size(), maxAmount, end - start));
-
-        return tenderList;
-    }
-
 
 }
